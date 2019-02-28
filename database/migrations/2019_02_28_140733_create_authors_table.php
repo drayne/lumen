@@ -17,10 +17,10 @@ class CreateAuthorsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->string('github');
-            $table->string('twitter');
+            $table->string('github')->nullable();
+            $table->string('twitter')->nullable();
             $table->string('location');
-            $table->string('latest_article_published');
+            $table->string('latest_article_published')->nullable();
             $table->timestamps();
         });
     }

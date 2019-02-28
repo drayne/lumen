@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 //    return str_random(32);
 //});
 
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->get('authors',  ['uses' => 'AuthorController@showAllAuthors']);
 
     $router->get('authors/{id}', ['uses' => 'AuthorController@showOneAuthor']);
