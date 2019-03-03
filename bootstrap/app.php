@@ -93,6 +93,9 @@ $app->singleton(
 |
 */
 
+$app->configure('queue');
+$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
+
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
