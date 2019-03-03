@@ -103,6 +103,101 @@ return [
             ],
 
         ],
+        'cloudAmpq' => [
+
+            'driver' => 'rabbitmq',
+
+            'dsn' => env('RABBITMQ_DSN', null),
+
+            /*
+             * Could be one a class that implements \Interop\Amqp\AmqpConnectionFactory for example:
+             *  - \EnqueueAmqpExt\AmqpConnectionFactory if you install enqueue/amqp-ext
+             *  - \EnqueueAmqpLib\AmqpConnectionFactory if you install enqueue/amqp-lib
+             *  - \EnqueueAmqpBunny\AmqpConnectionFactory if you install enqueue/amqp-bunny
+             */
+
+            'factory_class' => Enqueue\AmqpLib\AmqpConnectionFactory::class,
+
+            'host' => env('CLOUDAMPQ_HOST', '127.1.0.1'),
+            'port' => env('CLOUDAMPQ_PORT', 5672),
+
+            'vhost' => env('CLOUDAMPQ_VHOST', 'guest'),
+            'login' => env('CLOUDAMPQ_LOGIN', 'guest'),
+            'password' => env('CLOUDAMPQ_PASSWORD', 'secret'),
+
+            'queue' => env('CLOUDAMPQ_QUEUE', 'default'),
+
+            'options' => [
+
+                'exchange' => [
+
+                    'name' => env('CLOUDAMPQ_EXCHANGE_NAME'),
+
+                    /*
+                     * Determine if exchange should be created if it does not exist.
+                     */
+
+                    'declare' => env('CLOUDAMPQ_EXCHANGE_DECLARE', true),
+
+                    /*
+                     * Read more about possible values at https://www.CLOUDAMPQ.com/tutorials/amqp-concepts.html
+                     */
+
+                    'type' => env('CLOUDAMPQ_EXCHANGE_TYPE', \Interop\Amqp\AmqpTopic::TYPE_DIRECT),
+                    'passive' => env('CLOUDAMPQ_EXCHANGE_PASSIVE', false),
+                    'durable' => env('CLOUDAMPQ_EXCHANGE_DURABLE', true),
+                    'auto_delete' => env('CLOUDAMPQ_EXCHANGE_AUTODELETE', false),
+                    'arguments' => env('CLOUDAMPQ_EXCHANGE_ARGUMENTS'),
+                ],
+
+                'queue' => [
+
+                    /*
+                     * Determine if queue should be created if it does not exist.
+                     */
+
+                    'declare' => env('CLOUDAMPQ_QUEUE_DECLARE', true),
+
+                    /*
+                     * Determine if queue should be binded to the exchange created.
+                     */
+
+                    'bind' => env('CLOUDAMPQ_QUEUE_DECLARE_BIND', true),
+
+                    /*
+                     * Read more about possible values at https://www.rabbitmq.com/tutorials/amqp-concepts.html
+                     */
+
+                    'passive' => env('CLOUDAMPQ_QUEUE_PASSIVE', false),
+                    'durable' => env('CLOUDAMPQ_QUEUE_DURABLE', true),
+                    'exclusive' => env('CLOUDAMPQ_QUEUE_EXCLUSIVE', false),
+                    'auto_delete' => env('CLOUDAMPQ_QUEUE_AUTODELETE', false),
+                    'arguments' => env('CLOUDAMPQ_QUEUE_ARGUMENTS'),
+                ],
+            ],
+
+            /*
+             * Determine the number of seconds to sleep if there's an error communicating with rabbitmq
+             * If set to false, it'll throw an exception rather than doing the sleep for X seconds.
+             */
+
+            'sleep_on_error' => env('CLOUDAMPQ_ERROR_SLEEP', 5),
+
+            /*
+             * Optional SSL params if an SSL connection is used
+             * Using an SSL connection will also require to configure your RabbitMQ to enable SSL. More details can be founds here: https://www.rabbitmq.com/ssl.html
+             */
+
+            'ssl_params' => [
+                'ssl_on' => env('CLOUDAMPQ_SSL', false),
+                'cafile' => env('CLOUDAMPQ_SSL_CAFILE', null),
+                'local_cert' => env('CLOUDAMPQ_SSL_LOCALCERT', null),
+                'local_key' => env('CLOUDAMPQ_SSL_LOCALKEY', null),
+                'verify_peer' => env('CLOUDAMPQ_SSL_VERIFY_PEER', true),
+                'passphrase' => env('CLOUDAMPQ_SSL_PASSPHRASE', null),
+            ],
+
+        ],
         // ...
     ],
 
