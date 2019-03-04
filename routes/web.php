@@ -32,4 +32,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('authors/{id}', ['uses' => 'AuthorController@update']);
 });
 
-$router->get('/test', 'RabbitSendController@test');
+$router->get('/test/{messages}', 'RabbitSendController@sendMessages');
+$router->get('/testget', 'RabbitSendController@getMessages');
